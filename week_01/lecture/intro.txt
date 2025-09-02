@@ -1,0 +1,113 @@
+
+
+
+
+
+
+
+
+
+
+
+
+Welcome to the course!
+
+
+Andrei
+
+Course materials:
+
+https://github.com/tyzia/http5221_f25_public
+
+
+
+We will cover three important topics:
+
+- JavaScript
+- Accessibility
+- Usability
+
+(Critical Path)
+
+
+
+
+
+
+
+
+
+I expect from you:
+
+- Hard work - learning new material is hard.
+- Honesty - don't submit the code which is not yours.
+- Desire to learn.
+
+
+
+
+Marking
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+NaN === NaN
+
+What does this evaluate to?
+
+1) true
+2) false
+3) NaN
+4) SyntaxError
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Answer:
+
+false
+
+NaN is not equal to anything,
+even to another NaN.
