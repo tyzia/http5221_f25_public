@@ -1,0 +1,170 @@
+
+
+
+
+
+
+
+Plan
+
+
+
+
+Usability
+10 Heuristics of Usability
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Usability
+
+
+
+Usability - how people will use your website.
+
+" Web usability - The extent to which specified users can find,
+understand and use information and services online."
+
+                Government of Canada, Standard on Web Usability
+
+
+
+Usability test - to determine if the website is usable.
+
+Heuristics - a checklist of usability principles which we should consider
+when we build our website, if we want it to be usable.
+
+The most well-known - 10 Usability Heuristics of Jakob Nielsen
+
+https://www.nngroup.com/articles/ten-usability-heuristics/
+
+Heuristic Evaluation - inspecting the website according
+to usability heuristics.
+
+Example
+
+Heuristic Evaluation of a website
+based on Jakob Nielsen's 10 usability heuristics.
+
+https://reservations.ontarioparks.ca/
+
+1. Visibility of System Status
+
+- When user selects campground, they can see loading indicators.
+
+2. Match Between System and the Real World
+
+- Familiar language ('campground', 'backcountry', etc.) is used.
+
+3. User Control and Freedom
+
+- Users can easily navigate back.
+
+4. Consistency and Standards
+
+- The design follows common web conventions: Sign in, Cart, Reservations.
+
+5. Error Prevention
+
+- The site could enhance error prevention by making
+default value for Equipment field.
+
+6. Recognition Rather Than Recall
+
+- When I select Mew Lake campground I see it belongs to Algonquin park.
+- Legend below the map.
+
+7. Flexibility and Efficiency of Use
+
+- Saved searches for returning users can improve efficiency.
+
+8. Aesthetic and Minimalist Design
+
+- The design is mostly clean and minimalist.
+
+9. Help Users Recognize, Diagnose, and Recover from Errors
+
+- Error messages are present helping users how to fix their issues.
+
+10. Help and Documentation
+
+- FAQ page.
+- Descriptions of the campgrounds.
+
+
+
+
+
+
+
+
+
+
+Group Assignment
+
+
+
+How to access GitHub Group assignment?
+
+
+- Form a group of 3-5 students.
+- Decide who is your team leader.
+- Team leader first accepts Assignment via Github Classroom link.
+- Team leader creates group with the name
+- Any other team member selects this team when accepting
+the assignment link.
+- You will get a team repo (the same for each team member).
+
+
+
+How to collaborate?
+
+- Team leader should do first:
+
+> git clone <repo>
+> git checkout -b develop
+> git push origin develop
+
+This way you all will have shared 'develop' branch.
+
+- Next, each team member:
+
+> git clone <repo>
+> git checkout -b develop
+> git pull origin develop
+
+- After that each team member locally
+adds corresponding content to the sections.
+And pushes changes to 'develop' branch:
+
+> git add .
+> git commit -m "Added XSS examples"
+> git push origin develop
+
+
+
+
+How to submit?
+
+- Once your work is done, your team leader
+creates one PR in group repo.
+- Each team member submits the link to this
+PR via Blackboard.
+
+
+
+
+
+
+
+Thank you!
