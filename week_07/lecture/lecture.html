@@ -1,0 +1,631 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Lecture</title>
+</head>
+
+<body>
+	<section class="output"></section>
+	<script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		// Plan
+
+
+
+		// Array methods
+		// Spread operator
+		// Object destructuring
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		// Array methods
+
+
+		// each array has these methods by default
+
+		// .forEach()
+		// .slice()
+		// .map()
+		// .filter()
+		// .some()
+		// .find()
+
+
+
+
+
+
+
+
+
+
+		// .forEach()
+
+
+
+
+
+
+
+
+
+
+		// Example
+
+		// Regular for loop:
+
+		// const numbers = [1, 2, 3, 4];
+		// for (let i = 0; i < numbers.length; i++) {
+		// 	console.log(numbers[i]);
+		// }
+
+
+
+		// .forEach()
+
+		// const numbers = [1, 2, 3, 4];
+		// numbers.forEach(num => console.log(num));
+
+
+
+
+
+
+
+
+
+
+
+
+
+		// .slice()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		// .slice() = creates new array
+		// as portion of original array
+
+		// Effectively it creates a copy of array.
+
+
+
+		// Example
+
+		// const newArr = [100, 200, 300, 400, 500, 600].slice(2, 5);
+		// [300, 400, 500]
+
+		// 2 - starting index (its value is included)
+		// 5 - finishing index (its value is not included)
+
+
+		// const newArr = [100, 200, 300, 400, 500, 600].slice();
+		// [100, 200, 300, 400, 500, 600]
+
+		// This will be 'shallow copy' of array, meaning
+		// it is new array, with the same values.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		// .map()
+
+
+
+
+
+
+
+
+
+
+
+
+		// .map() = creates a new array by
+		// applying my function to each element
+		// of original array
+
+
+
+
+		// Example
+
+		// const original = [1, 2, 3, 4];
+		// const doubled = original.map(num => num * 2);
+		// console.log(original); // [1,2,3,4]
+		// console.log(doubled); // [2,4,6,8]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		// .filter()
+
+
+
+
+
+
+
+
+
+
+
+
+		// .filter() = creates a new array
+		// with elements which pass my test
+
+
+
+
+		// Example
+
+		// const original = [-1, -2, 3, -4, 5];
+		// const positive = original.filter(num => num >= 0);
+		// console.log(original); // [-1,-2,3,-4,5]
+		// console.log(positive); // [3,5]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		// .some()
+
+
+
+
+
+
+
+
+
+
+
+
+		// .some() = returns true if at least
+		// one element in the array passes my test
+		// otherwise false
+
+
+
+
+
+
+		// Example
+		// Even vs odd
+
+		// One value (2) is even, returns true
+		// console.log([1, 2, 3, 7, 5].some(num => num % 2 === 0)); // true
+
+		// No even, returns false
+		// console.log([1, 9, 3, 7, 5].some(num => num % 2 === 0)); // false
+
+		// 3) All even, returns true
+		// console.log([2, 4, 6, 8, 8].some(num => num % 2 === 0)); // true
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		// .find()
+
+
+
+
+
+
+
+
+
+
+
+
+		// .find() = returns first element
+		// from the array which passes my test
+		// otherwise returns undefined
+
+
+
+
+
+
+		// Example: find number greater than 3
+
+		// console.log([1, 4, 5, 7, 9].find(num => num > 3)); // 4
+
+
+
+
+
+
+
+
+
+		// How to find all elements satisfying my condition?
+
+		// Answer:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		// Answer: .filter()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		// Spread operator (...)
+
+
+
+
+
+
+
+
+
+
+
+
+		// The spread operator (...) is a cool feature in JavaScript
+		// that allows you to expand elements of an iterable
+		// (like an array or object) into individual elements.
+		// In other words "to copy" elements of an array or object.
+
+
+
+
+
+
+
+
+
+		// Examples:
+
+
+
+		// Copying arrays
+
+		// const originalArray = [1, 2, 3];
+		// const copiedArray = [ ...originalArray ];
+		// console.log(copiedArray); // [1, 2, 3]
+
+
+
+
+
+		// Merging arrays
+
+		// const array1 = [1, 2, 3];
+		// const array2 = ['a', 'b', 'c'];
+		// console.log([ ...array1, ...array2 ]); // [1, 2, 3, 'a', 'b', 'c']
+
+
+
+
+		// Copying objects
+
+		// const originalObject = { name: 'John', age: 25 };
+		// const duplicateObject = { ...originalObject };
+		// console.log(duplicateObject); // { name: 'John', age: 25 }
+
+
+
+
+
+
+		// Merging objects
+
+		// const object1 = { a: 1, b: 2 };
+		// const object2 = { c: 3, d: 4 };
+		// const mergedObject = { ...object1, ...object2 };
+		// console.log(mergedObject); // { a: 1, b: 2, c: 3, d: 4 }
+
+
+
+
+
+
+		// We can do more cool staff with spread operator
+
+
+
+
+		// Add elements to array
+
+		// Example:
+
+		// const array = [1, 2, 3];
+		// const newArray = [0, ...array, 4];
+		// console.log(newArray); // [0, 1, 2, 3, 4]
+
+
+
+
+
+
+
+		// Pass arguments to a function
+
+		// Example:
+
+		// const sum = (a, b, c) => a + b + c;
+		// const numbers = [1, 2, 3];
+		// console.log(sum(numbers[0], numbers[1], numbers[2]));
+		// console.log(sum(...numbers));
+
+
+		// Remember!
+		// We can pass more arguments than needed
+		// to the function, but if we pass
+		// less arguments, unexpected results can happen.
+
+		// const sum = (a, b, c) => a + b + c;
+		// const numbers = [1, 2, 3, 4];
+		// console.log(sum(...numbers));
+
+
+		// const sum = (a, b, c) => a + b + c;
+		// const numbers = [ 1 ];
+		// console.log(sum(...numbers));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		// Object destructuring
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		// Object destructuring is a powerful feature in JavaScript.
+		// It allows to extract properties from objects.
+		// And assign them to variables.
+
+
+
+
+
+
+
+
+
+
+
+
+
+		// Example
+
+		// const person = { name: 'Alice', age: 25, city: 'Wonderland' };
+		// const name = person.name;
+		// const age = person.age;
+		// const cityProp = person.city;
+
+
+		// I can do the same but in a concise way
+		// with Object destructuring:
+
+		// const person = { name: 'Alice', age: 25, city: 'Wonderland' };
+		// const { name, age, city } = person;
+
+		// I may wish not to extract all properties,
+		// but only those which I need:
+
+		// const person = { name: 'Alice', age: 25, city: 'Wonderland' };
+		// const { age } = person;
+
+
+
+
+
+
+
+
+
+
+
+
+
+		// We can use destructuring in
+		// function parameters
+
+		// const person = { name: 'Alice', age: 25, city: 'Wonderland' };
+		//
+		// function greet({ name, age }) {
+		//     console.log(`Hello, ${name}! You are ${age} years old.`);
+		// }
+		//
+		// greet(person); // 'Hello, Alice! You are 25 years old.'
+
+
+
+
+
+
+
+		// You can't destructure null or undefined
+
+		// const { name } = null; // TypeError: Cannot destructure property 'name' of 'null'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		// Thank you
+
+
+
+
+
+	</script>
+
+</body>
+</html>
