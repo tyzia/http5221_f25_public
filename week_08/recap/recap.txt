@@ -1,0 +1,144 @@
+Recap from Week 8
+(delivered at Week 9)
+
+
+Ad Hoc Testing
+unplanned, unstructured, quick, depends on
+intuition of tester.
+
+Pros:
+
+- Fast
+- Flexible
+- Finds unexpected bugs
+
+Cons:
+
+- Not reproducible
+
+
+Functionality Heuristics:
+
+- Does the form submit when I hit Enter?
+- Does anything look broken in UI? In different
+browsers & devices?
+- Are there any console errors or warnings?
+
+Performance Heuristics:
+
+- Does the app feel slow?
+- Does the app crash if I use it for a while?
+
+Accessibility Heuristics:
+
+- Can I navigate using only Tab key?
+
+Security Heuristics:
+
+- If manipulate query strings, what happens?
+- Are inputs vulnerable for XSS or SQL injection attacks?
+- Can I access directories via URL?
+- Load website not with HTTPS but HTTP and check the page
+
+
+
+Memory Leak
+
+When a program fails
+to release memory it no longer needs.
+
+In JavaScript:
+
+- Unintended global variables
+(Missed variable type declaration)
+
+- Detached DOM elements
+(Keep references to DOM elements)
+
+How to fix?
+
+- Always declare type of variables.
+- Clear references to DOM elements.
+
+
+
+Web Performance
+
+Measures how fast and efficient
+a website feels to users.
+
+It includes:
+
+- Load speed (how quickly content appears)
+- Responsiveness (how fast the page reacts to clicks/scrolling)
+- Visual stability (avoiding sudden layout shifts)
+
+Why Web performance matters?
+
+- 53% of users abandon slow sites (3+s to load).
+- Google lowers in search rankings.
+
+Lighthouse extension audits Web Performance.
+
+How to fix?
+
+- Always add <meta> tag:
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=0.5">
+
+- Delete JS code which is not needed.
+- Refactor JS code to use optimized solutions.
+- Split work into smaller chunks.
+
+Similar to Lighthouse is PageSpeed:
+
+https://pagespeed.web.dev/
+
+
+
+WAVE
+
+Evaluates web content for accessibility.
+
+It provides visual feedback and offers
+suggestions for fixes.
+
+
+
+Validators
+
+Online tools to catch mistakes in code.
+
+Validators help:
+
+- Prevent rendering issues
+(Unclosed tags can cause
+elements to nest incorrectly)
+
+- Improve Accessibility
+(Catch missing alt text)
+
+- Boost SEO
+(Search engines penalize pages with
+malformed HTML)
+
+- Ensure cross browser compatibility
+(Browsers interpret invalid code differently)
+
+
+HTML Validator
+https://validator.w3.org/
+
+Link Validator
+https://validator.w3.org/checklink
+
+CSS Validator
+https://jigsaw.w3.org/css-validator/
+
+JS validator
+ESLint library
+
+Browser compatibility
+https://caniuse.com/
+
+
+
