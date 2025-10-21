@@ -1,152 +1,174 @@
-Recap from Week 2
+Recap from Week 3
+(delivered at Week 4)
 
 
 
+Regex - a tool to work with strings.
+It can search for a match, replace, extract.
+
+Workflow:
+1. Create a regex pattern / /
+2. Test string against this pattern.
+
+Examples:
+/1/.test('1') -> true
+/h/.test('h') -> true
+/[1-9]/.test('02') -> true
+/[a-z]/.test('A') -> false
+/[a-zA-Z]/.test('A') -> true
+/[a-z]/i.test('A') -> true
+
+Regex is looking everywhere:
+/cat/.test('The cat is nice') -> true
+
+Quantifiers in Regex:
+
+. = matches any character
+/c.t/.test('The cot is nice') -> true
+
++ = one or more match of previous character
+/ca+t/.test('The caaat is nice') -> true
+/ca+t/.test('The ct is nice') -> false
+
+* = zero or more match of previous character
+/ca*t/.test('The ct is nice') -> true
+/ca*t/.test('The caaat is nice') -> true
+
+? = preceding character is optional
+/ca?t/.test('The ct is nice') -> true
+/ca?t/.test('The caaat is nice') -> false
+
+{n} = exactly n matches
+/ca{2}t/.test('The caat is nice') -> true
+/ca{2}t/.test('The cat is nice') -> false
+
+Searching for special characters: . + ?
+Need to escape with \
+. -> \.
++ -> \+
+? -> \?
+/\./.test('example.com') -> true
+
+Special markers in Regex:
+
+\d = any number
+\w = any word character (letters, digits, underscores)
+
+/\d/.test('abc123') -> true
+/\w+/.test('abc123') -> true
+
+Other special markers:
+
+^ = marks beginning of the string
+$ = marks the end of the string
+
+/^cat$/.test('cat') -> true
+/^cat$/.test('cat ') -> false
+
+Online tool: https://regex101.com/
 
 
 
-Comments
+Error Handling
 
-Code speaks for itself.
-Do not: explain obvious, comment out code.
-Do: explain why, not how.
+Any time JS will encounter an error,
+it will crash the app and throw
+unhandled error.
 
-"use strict";
-Applies strict mode in JS. Can be global or in function.
+To prevent app from crashing use:
 
-B.E.M.
-Naming convention for CSS classes.
-Easier to understand the structure.
-.block__element--modifier { ... }
+try { risky } catch(err) { }
 
-Falsy
-- false
-- 0
-- ""
-- null
-- undefined
-- NaN
+We can throw custom errors from our functions:
 
-Truthy
-- true
-- any number (not 0)
-- any string (not empty)
-- any object (even empty)
-- any array (even empty)
-- any function
-
-Functions
-Reusable block of code.
-
-Declarations:
-1)
-function onePlusOne() {
-    const result = 1 + 1;
-    return result;
+function showName(a) {
+    if (a === undefined) {
+ 		throw new Error('You provided undefined value');
+ 	}
+ 	if (a === null) {
+ 		throw new Error('You provided null value');
+ 	}
+  	return a.name;
 }
-2)
-const twoPlusTwo = function() {
-    const result = 2 + 2;
-    return result;
+
+And catch these errors:
+
+try { showName(null); }
+catch(err) { console.log(`${err}`); }
+
+Best practice: provide error code + description
+
+function showName(a) {
+    if (a === undefined) {
+ 		const error = new Error('You provided undefined value');
+ 		error.code = 'ERR_UNDEFINED';
+ 		throw error;
+ 	}
+    return a.name;
 }
-3) Arrow function
-const threePlusThree = () => {
-    const result = 3 + 3;
-    return result;
+
+try { showName(undefined); }
+catch(err) { console.log(`${err.code}`); }
+
+
+
+Unit tests
+
+We test unit of code (function) if it:
+- is doing what is supposed to.
+- is not doing what is not supposed to.
+
+Original
+function add(a, b) { return a + b }
+
+Test function
+function testAdd(valueA, valueB, result) {
+    return add(valueA, valueB) === result;
 }
 
-Simplified syntax:
-const fourPlusFour = () => 4 + 4;
-const sumOfVariable = numberIn => numberIn + 1;
+Test cases
+console.log(testAdd(1, 1, 2));
+console.log(testAdd(2, 2, 4));
+console.log(testAdd(-3, 2, -1));
 
-if-else short notation
-const resultNew = condition ? 'hello' : 'see you';
+Edge cases - values at the ends of the range.
 
-AND (&&)
+Testing error handling
 
-Returns:
-- value of first falsy operand: 0 && true -> 0
-- value of the last operand if all are truthy: 1 && 2 -> 2
+Original
+function isValidAge(age) {
+    if (typeof age !== 'number') {
+ 		throw new Error('Invalid input');
+ 	}
+ 	return age >= 18 && age <= 25;
+}
 
-Never executes right-right-hand side
-if left-hand side is false:
-0 && 'you never see me'
+Test function
+function testAdd(value, result) {
+    return isValidAge(value) === result;
+}
 
-OR (||)
+Test cases
+try {
+ 	testIsValidAge('18', 'Invalid input');
+} catch(err) {
+    if (err.message === expected) {
+		console.log('Test passed');
+ 	} else {
+		console.error('Test failed');
+	}
+}
 
-Returns:
-- value of first truthy operand: 1 || 2 -> 1
-- value of the last operand if all are falsy: false || 0 -> 0
 
-Never executes right-right-hand side
-if left-hand side is true:
-true || 'you never see me'
+TDD
+Test Driven Development
 
-Always executes right-right-hand side
-if left-hand side is false:
-false || 'you always see me'
+We write tests first.
+We run the tests and they fail (good).
+We add actual code.
+We run the tests again and they pass (good).
 
-Used to set defaults:
-let score = userScore || 0;
 
-Nullish Coalescing (??)
-Checks if value is null or undefined.
 
-const count = 0;
-count || 10 -> 10
-count ?? 10 -> 0
 
-Optional chaining operator (?.)
-Allows reading the value of a property
-without validating that it exists.
-
-Without ?.
-const user = { name: 'John' };
-user.address.city -> TypeError
-
-With ?.
-const user = { name: 'John' };
-user.address?.city -> undefined (no error)
-
-const user = { name: 'John', address: { city: 'Toronto' } };
-user.address?.city -> 'Toronto'
-
-Strict equality (===)
-Checks both type & value.
-Is strongly recommended.
-
-1 === 1 -> true
-1 === '1' -> false
-1 == '1' -> true
-
-Type coercion
-If there is at least one string with +,
-JS converts all to strings:
-
-1 + '1' -> '11'
-'Hello' + 1 -> 'Hello1'
-
-To do math convert to number:
-1 + +'1' -> 2
-1 + Number('1') -> 2
-
-window
-Global object, has data about browser window.
-
-window.onload - fires when HTML and all assets
-(images, fonts) are fully loaded and ready for JS.
-
-window.onload = function() {
-	console.log("The page has fully loaded!");
-};
-
-window.location
-Object with data about current browser URL
-
-https://example.com/index?q=a
-window.location.href -> the full URL (https://example.com/index?q=a)
-window.location.protocol -> protocol scheme (https)
-window.location.hostname -> only domain (example.com)
-window.location.pathname -> everything after domain (/index?q=a)
-window.location.search -> the query string (?q=a)
 

@@ -1,174 +1,190 @@
-Recap from Week 3
-(delivered at Week 4)
+Recap from Week 4
+(delivered at Week 6)
 
 
 
-Regex - a tool to work with strings.
-It can search for a match, replace, extract.
-
-Workflow:
-1. Create a regex pattern / /
-2. Test string against this pattern.
-
-Examples:
-/1/.test('1') -> true
-/h/.test('h') -> true
-/[1-9]/.test('02') -> true
-/[a-z]/.test('A') -> false
-/[a-zA-Z]/.test('A') -> true
-/[a-z]/i.test('A') -> true
-
-Regex is looking everywhere:
-/cat/.test('The cat is nice') -> true
-
-Quantifiers in Regex:
-
-. = matches any character
-/c.t/.test('The cot is nice') -> true
-
-+ = one or more match of previous character
-/ca+t/.test('The caaat is nice') -> true
-/ca+t/.test('The ct is nice') -> false
-
-* = zero or more match of previous character
-/ca*t/.test('The ct is nice') -> true
-/ca*t/.test('The caaat is nice') -> true
-
-? = preceding character is optional
-/ca?t/.test('The ct is nice') -> true
-/ca?t/.test('The caaat is nice') -> false
-
-{n} = exactly n matches
-/ca{2}t/.test('The caat is nice') -> true
-/ca{2}t/.test('The cat is nice') -> false
-
-Searching for special characters: . + ?
-Need to escape with \
-. -> \.
-+ -> \+
-? -> \?
-/\./.test('example.com') -> true
-
-Special markers in Regex:
-
-\d = any number
-\w = any word character (letters, digits, underscores)
-
-/\d/.test('abc123') -> true
-/\w+/.test('abc123') -> true
-
-Other special markers:
-
-^ = marks beginning of the string
-$ = marks the end of the string
-
-/^cat$/.test('cat') -> true
-/^cat$/.test('cat ') -> false
-
-Online tool: https://regex101.com/
 
 
+Sync: Code runs sequentially
 
-Error Handling
+console.log("1");
+console.log("2");
+console.log("3");
 
-Any time JS will encounter an error,
-it will crash the app and throw
-unhandled error.
+Blocking behaviour
 
-To prevent app from crashing use:
+console.log("1");
+const startTime = Date.now();
+while (Date.now() - startTime < 2000) {
+	console.log('you are blocked');
+}
+console.log("2"); <- blocked
+console.log("3"); <- blocked
 
-try { risky } catch(err) { }
 
-We can throw custom errors from our functions:
+Async: program continues to run,
+it is not blocked, and async
+operation is in parallel/background.
 
-function showName(a) {
-    if (a === undefined) {
- 		throw new Error('You provided undefined value');
- 	}
- 	if (a === null) {
- 		throw new Error('You provided null value');
- 	}
-  	return a.name;
+console.log("1");
+const startTime = Date.now();
+setTimeout(() => while (Date.now() - startTime < 2000) {
+    console.log('you are blocked');
+}); <- runs asynchronously
+console.log("2"); <- not blocked
+console.log("3"); <- not blocked
+
+
+Promise
+Represents future value.
+
+Two states:
+
+.then() <- if promise resolved (return data)
+.catch() <- if promise rejected (return error)
+
+Example
+fetch('url')
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.log(error));
+
+
+Async/Await
+
+await makes async code look sync.
+await is used only inside async function.
+
+async function getData() {
+  const response = await fetch('url');
+  const data = await response.json();
+  console.log(data);
 }
 
-And catch these errors:
+Example
 
-try { showName(null); }
-catch(err) { console.log(`${err}`); }
+const example = () => 5;
+console.log(example()); // 5
 
-Best practice: provide error code + description
+const example = async () => 5;
+console.log(example()); // Promise
+example().then(five => console.log(five)); // 5
 
-function showName(a) {
-    if (a === undefined) {
- 		const error = new Error('You provided undefined value');
- 		error.code = 'ERR_UNDEFINED';
- 		throw error;
- 	}
-    return a.name;
+
+Do not store sensitive data in plain text.
+A way to 'hide' the data - create a hash of it.
+
+Hash
+
+- Fixed length (SHA-256: 64 chars).
+- One-way (can't reverse-engineer input).
+- Deterministic (same input → same hash).
+
+a (a single letter)
+ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb
+
+javascript (a word)
+b9352494463399aa6a44ed5e39425b8a0bc39b2fc3d0184ba2583ce9bc4e4c1d
+
+Hashing algorithms:
+
+- md5 (popular but may have collisions)
+- sha-256 (a better choice)
+
+To get SHA-256 hash:
+
+async function generateHash(text) {
+	const encoder = new TextEncoder();
+	const data = encoder.encode(text);
+	const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+	const hashArray = Array.from(new Uint8Array(hashBuffer));
+	return hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
 }
+generateHash('hello world').then(hash => console.log(hash));
 
-try { showName(undefined); }
-catch(err) { console.log(`${err.code}`); }
+Jasmine
+
+A JavaScript testing framework for
+writing unit tests in a human-readable way.
+
+Key Features
+- Works in browsers & Node.js
+- Clean syntax (describe, it, expect)
+- Built-in matchers (.toBe, .toEqual, etc.)
+
+Install
+
+> npm init -y
+> npm install jasmine --save-dev
+> npx jasmine init
+
+Run
+
+> npx jasmine
+
+All tests have *.spec.js suffix
+and go inside /spec folder.
+
+Syntax
+
+describe('Math tests', () => {
+   it('should add 1 + 1', () => expect(1 + 1).toBe(2));
+   it('should add 2 + 2', () => expect(2 + 2).toBe(4));
+});
+
+describe() - groups different tests together
+it() - defines a single test
+expect() - allows to evaluate the expression
+
+Matcher methods:
+
+.toBe() (===, primitive values)
+.toEqual() (arrays, objects)
+.toContain() (arrays, strings)
+etc
+
+.toBe()
+
+function giveMeTwo() { return 2 }
+it('should have result as 2', () =>
+  expect(giveMeTwo()).toBe(2)
+);
+
+.toEqual()
+
+function giveMeObject() { return { name: 'humber' } }
+it('should have result object', () =>
+  expect(giveMeObject()).toEqual({ name: 'humber' })
+);
+
+Not working (.toBe()):
+it('should have result object', () =>
+  expect(giveMeObject()).toBe({ name: 'humber' })
+);
+
+.toContain()
+
+function giveMeArray() { return [1, 2, 3] }
+it('should have 2 in array', () =>
+  expect(giveMeArray()).toContain(2)
+);
+
+function giveMeHelloWorld() { return "hello world" }
+it('should have "h" in the string', () =>
+  expect(giveMeHelloWorld()).toContain('h')
+);
 
 
+.not - will negate the matcher check
 
-Unit tests
+it('not equal', () => expect(1).not.toBe(2));
 
-We test unit of code (function) if it:
-- is doing what is supposed to.
-- is not doing what is not supposed to.
+Why tests matter?
 
-Original
-function add(a, b) { return a + b }
-
-Test function
-function testAdd(valueA, valueB, result) {
-    return add(valueA, valueB) === result;
-}
-
-Test cases
-console.log(testAdd(1, 1, 2));
-console.log(testAdd(2, 2, 4));
-console.log(testAdd(-3, 2, -1));
-
-Edge cases - values at the ends of the range.
-
-Testing error handling
-
-Original
-function isValidAge(age) {
-    if (typeof age !== 'number') {
- 		throw new Error('Invalid input');
- 	}
- 	return age >= 18 && age <= 25;
-}
-
-Test function
-function testAdd(value, result) {
-    return isValidAge(value) === result;
-}
-
-Test cases
-try {
- 	testIsValidAge('18', 'Invalid input');
-} catch(err) {
-    if (err.message === expected) {
-		console.log('Test passed');
- 	} else {
-		console.error('Test failed');
-	}
-}
-
-
-TDD
-Test Driven Development
-
-We write tests first.
-We run the tests and they fail (good).
-We add actual code.
-We run the tests again and they pass (good).
-
-
+- Catch errors before deployment.
+- Describe how code should work.
+- Enable refactoring: Change code
+confidently with passing tests.
 
 
 

