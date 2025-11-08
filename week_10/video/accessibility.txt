@@ -1,0 +1,372 @@
+
+
+
+Materials for video recordings
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ARIA attributes
+
+A way to supplement regular HTML elements
+to make them accessible.
+
+
+
+aria-label
+
+Provides name to the element.
+
+Example
+
+<button (click)="close()"> X </button>
+
+With aria-label:
+<button aria-label="Close" (click)="close()"> X </button>
+
+Example
+
+<button (click)="close()"> Close </button>
+
+A button's accessible name is the content
+between the opening & closing tag. We don't need
+to add aria-label in this case.
+
+
+Example
+
+<a href="#"> Read more </a>
+
+The problem here: read more about what?
+
+A better way to create this link will be:
+
+<a href="#"> Read more about Humber courses </a>
+
+But what if we:
+
+- Want to display only "Read more" label.
+- Want to make this link accessible.
+
+Answer: Use aria-label
+
+Example
+
+<a href="#" aria-label="Link to a page to read more
+about Humber courses"> Read more </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+aria-invalid
+
+Let users know what went wrong
+if their input is incorrect.
+
+Can be: true or false
+
+Example
+<input name="email_field" aria-invalid="true">
+
+aria-describedby
+
+Use this attribute to connect
+an error message associated with the field.
+
+Example
+
+<input name="email_field"
+ aria-invalid="true"
+ aria-describedby="email-error">
+
+<div id="email-error" style="color: red;">
+   Please enter a valid email address.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+aria-hidden
+
+It hides non-interactive content from screen readers.
+It doesn't hide the element visually.
+It can be: true or false
+
+Use aria-hidden for:
+
+- Purely decorative content (icons, images)
+- Duplicated content (repeated text)
+- Collapsed content (menus, modals)
+
+Example
+
+<button>
+   <span aria-hidden="true">&#8635;</span>
+   <span> Refresh </span>
+</button>
+
+Hide purely decorative icon (SVG) from screen readers.
+
+<button>
+  <svg aria-hidden="true" width="24" height="24">
+    <circle cx="12" cy="12" r="10" fill="blue" />
+  </svg>
+  Submit
+</button>
+
+Hiding duplicate content.
+
+The navigation in the footer is hidden from screen readers,
+because it is duplicated. This avoids unnecessary repetition.
+
+<header>
+  <nav aria-label="Main navigation">
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main> ... </main>
+
+<footer>
+  <nav aria-label="Footer navigation" aria-hidden="true">
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</footer>
+
+Display: none
+
+No need to add aria-hidden="true" to elements with CSS
+display: none. Because these elements are already hidden
+visually and hence hidden from screen readers as well.
+
+Hide content with aria-hidden only if it improves readability.
+
+aria-hidden="true" hides all children of the element as well.
+
+
+When would you need aria-hidden="false"?
+
+When restoring accessibility state with JS.
+
+For example, you have an accordion:
+
+By default, all elements in accordion are collapsed.
+They are part of the DOM, but should be hidden from screen readers.
+They all have aria-hidden="true".
+
+When you click on the element in accordion, it is expanded.
+You will set its aria-hidden="false".
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+aria roles
+
+Provides information about element's purpose.
+
+But, we need to use semantic elements
+instead of aria roles.
+
+Bad:
+
+<div role="button"> Click me </div>
+
+Good:
+
+<button> Click me </button>
+
+Don't use these roles:
+
+- role="article" -> use element <article>
+- role="heading" -> use element <h1>, <h2>, ..., <h6>
+- role="main" -> use element <main>
+- role="navigation" -> use element <nav>
+
+Why these roles exist then?
+
+For example, if there is built-in widget/library
+and it uses non-semantic elements, then you would add role.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Tab
+
+We use tab key to navigate between focusable
+elements on a page without a mouse.
+
+Focusable items:
+
+- form fields: <input>, <select>, <label>, etc.
+- links: <a>
+- buttons: <button>
+
+tabindex
+
+With tabindex you can do:
+
+- Make non-focusable item to be focusable.
+- Make focusable item to be non-focusable.
+- Change the tabbing order of items.
+
+tabindex="0"
+
+You can make non-focusable item
+to become focusable.
+
+<div tabindex="0"> This div is focusable </div>
+
+tabindex="-1"
+
+You can make default clickable items not clickable!
+
+<a href="#" tabindex="-1"> Read more (not focusable) </a>
+
+We can achieve the same by disabling the element:
+
+<button disabled> Can't interact with me </button>
+
+
+You control the order with the numbers provided
+to tabindex:
+
+tabindex="1"   <- will be the first to get focus
+tabindex="2"   <- will be the second
+...
+tabindex="100" <- will be 100th
+
+Remember:
+Important interactive elements should be
+reachable by keyboard.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Skip to main content
+
+This is an important feature and actually required by
+accessibility standard.
+
+A special link that allows users to bypass
+the navigation menu and "jump" to main content of the page.
+
+Usually placed at the very top of the page.
+Often hidden, not visible to regular users.
+Becomes visible if you "tab" into it.
+
+
