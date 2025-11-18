@@ -1,0 +1,51 @@
+Recap from Week 11
+(delivered on Week 12)
+
+
+Usability Testing Matters.
+
+- Majority of online consumers are not
+returning after a bad experience.
+
+- Fixing an error after development is more
+expensive than during design.
+
+- You will be asked to fix usability
+issues in your career.
+
+In usability testing, a Brief is a document that
+outlines the key objectives of the usability testing.
+
+Brief should consist of the following:
+
+- Scope
+What you test, what you don't test.
+
+- Questions
+Add questions which you are interested in.
+
+- Participants
+Specify target group of people who
+would be your test participants.
+
+- Methods
+Which methods of testing you would use
+(Heuristics, Discovery, Benchmark)
+
+- Metrics
+What you are measuring (time, clicks, errors).
+
+- Schedule & Location
+Where and when you plan to run your tests.
+
+- Equipment
+Which equipment you would use.
+
+- Scenarios
+Which tasks your participants need to execute.
+
+- Executive Summary
+The whole plan summarized in 1-2 paragraphs.
+
+
+Thank you.

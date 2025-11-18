@@ -1,0 +1,233 @@
+
+
+
+
+Plan
+
+Usability testing (Brief)
+
+
+
+
+
+
+
+
+
+
+
+
+The Developer's Approach to Usability Testing
+
+Today's Goal:
+
+Learn to plan usability tests
+with a developer's mindset - anticipating not
+just what's broken, but how to fix it.
+
+
+
+
+
+
+
+
+Why Usability Testing Matters for Developers
+
+The Reality:
+
+- Majority of online consumers are less
+likely to return to a site after a bad experience.
+
+- Fixing an error after development is way more
+expensive than during design.
+
+- You will be asked to fix usability
+issues in your career
+
+
+
+Developer Advantage:
+
+We don't just find problems - we understand
+their root cause in the code.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Brief
+
+
+In usability testing, a Brief is a document that
+outlines the key objectives of the usability testing.
+
+It is a guide to ensure everyone understands the
+purpose and expectations of the test.
+
+
+Brief should consist of the following:
+
+- [09] Executive Summary.
+- [01] Scope.
+- [02] Questions.
+- [03] Participants.
+- [04] Methods.
+- [05] Metrics.
+- [06] Schedule & Location.
+- [07] Equipment.
+- [08] Scenarios.
+
+[N] - number in the brackets is the suggestion
+in which order to create this parts.
+
+
+
+
+1) Scope
+
+What is the scope of the test?
+
+The scope of testing should not be
+the whole website or app.
+
+Be specific in what you are testing
+and what you are not testing. Explain
+why you choose what you choose.
+
+
+
+2) Questions
+
+Add questions which you are trying to get answers for:
+
+- Can users find Search button?
+- Does dropdown menu work better than breadcrumbs?
+- Do users learn the interface in under 3 seconds?
+
+Explain why these questions matter for website owner.
+
+
+3) Participants
+
+What are the demographics of people you are testing?
+
+- Age, gender, level of education, income.
+No need in personal details (name, address, contact details).
+
+Why you have chosen this group of people?
+
+- This group should be the best match for the scope of your testing.
+
+
+
+
+4) Methods
+
+What methods you will use in your test?
+
+- Heuristics (specify which heuristics).
+- Discovery (finding problems by observing users perform tasks).
+- Benchmark (test how well solutions perform).
+- Is your test moderated or not?
+
+-- Moderated - when there is a moderator who tells participants what to do.
+-- Not moderated - when participants have a task and should complete it individually.
+
+
+5) Metrics
+
+- What you will measure.
+- How will you measure it?
+- What data you will be collecting.
+- Why this data is important?
+- Are you sure that a metric will help you to answer your question?
+
+Examples of metrics:
+
+- Successful task completion.
+How many participants have completed the task?
+
+- Critical Errors.
+How many critical errors did participants make?
+What are critical errors?
+Why they matter for your test?
+
+- Error-free rate.
+How many participants completed the task without any errors?
+
+- Time on Task.
+How much time did participant spend on task?
+Is it long?
+Why this matters?
+
+- Happiness from using the feature.
+"Is this reservation process was easy to complete"
+Strongly Agree - Agree - Neutral - Disagree - Strongly Disagree
+
+- Comments or Recommendations from the participants.
+
+
+6) Schedule and Location
+
+When you plan to perform the tests?
+Where this will happen?
+It can be online.
+
+
+
+7) Equipment
+
+Which OS, computer or device your participants will be using for testing.
+
+
+
+8) Scenarios
+
+- 'Heart' of your test plan.
+- A general set of objectives that guides your test participants.
+- Each scenario provides a context in order to allow participant to better
+understand the activity.
+- What are the most important things that every user must be able
+ to accomplish on your application?
+- Create tasks that address your test goals.
+
+
+
+
+9) Executive Summary
+
+The whole plan summarized in 1-2 paragraphs.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Thank you
