@@ -1,0 +1,59 @@
+Recap from Week 12
+(delivered on Week 13)
+
+
+
+Collecting data from Usability Test
+
+Plan how you will be collecting data:
+
+- Taking notes
+- Using Google Forms, Excel
+- Using recording
+
+Each test should be performed in exact same manner.
+To ensure accuracy of the test - use test script.
+
+Test script structure:
+
+- Intro
+
+Set comfortable environment.
+Make sure your website works.
+Explain the purpose of the test, brief the tasks.
+What triggers the start of test.
+What is considered the end of the test.
+Which tools/info they can use.
+Tell how long the test will be.
+Get their permissions to record the test if necessary.
+Ask demographic questions.
+Ask if participant has any questions.
+
+- Define tasks
+
+Explain 3-5 task scenarios.
+Prepare questions you want to ask
+during/after task completion.
+
+- Post-study
+
+After task is completed ask for a feedback.
+General impression of the test.
+
+
+Data Compilation
+
+- Get average values for quantitative data
+(time, clicks, errors, etc)
+
+- Summarise qualitative data
+ (feedback, observations, answers from participants)
+
+
+Usability Test demo by Steve Krug:
+
+https://www.youtube.com/watch?v=1UCDUOB_aS8
+https://sensible.com/downloads/test-script-web.pdf
+
+
+Thank you!

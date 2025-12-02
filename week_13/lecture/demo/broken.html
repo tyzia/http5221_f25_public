@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .checkout { max-width: 400px; }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px 0;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .feedback {
+            margin-top: -10px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            min-height: 20px;
+            color: red;
+            display: none;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<div class="checkout">
+    <h1>Broken Example</h1>
+    <h2>Checkout</h2>
+
+    <label for="cardNumber">Credit Card Number:</label>
+    <input type="text" id="cardNumber"
+           placeholder="Enter 16-digit card number">
+
+    <!-- PROBLEM: No formatting, no validation feedback.
+    Error only shows AFTER submit -->
+    <div id="cardFeedback" class="feedback">
+        Invalid card number
+    </div>
+
+    <button onclick="submitPayment()">
+        Submit Payment
+    </button>
+</div>
+
+
+<script>
+    async function submitPayment() {
+        const cardInput = document.getElementById('cardNumber');
+        const cardNumber = cardInput.value;
+        const errorDiv = document.getElementById('cardFeedback');
+        errorDiv.style.display = 'none';
+        cardInput.style.borderColor = 'black';
+        if (cardNumber.length !== 16 || isNaN(cardNumber)) {
+            errorDiv.style.display = 'block';
+            cardInput.style.borderColor = 'red';
+            return;
+        }
+        try {
+            // Simulate API call
+            await new Promise(resolve => setTimeout(resolve, 1500));
+
+            // Success
+            alert(`Payment processed successfully!`);
+        } catch (error) {
+            // Error handling
+            alert('Payment failed. Please try again or use a different card.');
+        }
+    }
+</script>
+</body>
+</html>

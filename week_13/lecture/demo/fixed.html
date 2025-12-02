@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .checkout { max-width: 400px; }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px 0;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        input.valid { border-color: #4CAF50; background-color: #f8fff8; }
+        input.invalid { border-color: #f44336; background-color: #fff8f8; }
+        .feedback {
+            margin-top: -10px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            min-height: 20px;
+        }
+        .valid-feedback { color: #4CAF50; }
+        .invalid-feedback { color: #f44336; }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+<div class="checkout">
+    <h1>Fixed Example</h1>
+    <h2>Checkout</h2>
+
+    <label for="cardNumber">Credit Card Number:</label>
+    <input type="text" id="cardNumber"
+           placeholder="Card number (e.g., 4111 1111 1111 1111)"
+           aria-describedby="cardFeedback">
+
+    <div class="feedback" id="cardFeedback" aria-live="polite">
+        <!-- Real-time feedback appears here -->
+    </div>
+
+    <button id="submitBtn" onclick="submitPayment()">
+        Submit Payment
+    </button>
+
+    <!-- Hidden tracking for analytics -->
+    <div id="usabilityMetrics" style="display: none;"></div>
+</div>
+
+<script>
+    let interactionStartTime = Date.now();
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const cardInput = document.getElementById('cardNumber');
+        const submitBtn = document.getElementById('submitBtn');
+        const metricsDiv = document.getElementById('usabilityMetrics');
+
+        // Track initial interaction
+        metricsDiv.dataset.interactions = '0';
+        metricsDiv.dataset.corrections = '0';
+
+        // 1. Format as user types
+        cardInput.addEventListener('input', function(e) {
+            const cursorPosition = e.target.selectionStart;
+            const oldValue = e.target.value;
+
+            // Format the value
+            const formatted = formatCardNumber(oldValue);
+
+            // Count spaces added
+            const oldSpaces = (oldValue.match(/\s/g) || []).length;
+            const newSpaces = (formatted.match(/\s/g) || []).length;
+            const totalSpacesAdded = newSpaces - oldSpaces;
+
+            // Update the input
+            e.target.value = formatted;
+
+            // Move cursor by total spaces added
+            const newCursorPosition = cursorPosition + totalSpacesAdded;
+            e.target.setSelectionRange(newCursorPosition, newCursorPosition);
+
+            // 2. Real-time validation
+            validateCardNumber(formatted);
+
+            // 3. Update button state
+            updateSubmitButton();
+
+            // 4. Track usability metrics
+            trackInteraction('input');
+        });
+
+        // Validate on blur as well
+        cardInput.addEventListener('blur', function() {
+            validateCardNumber(this.value);
+        });
+
+        // Track focus for time metrics
+        cardInput.addEventListener('focus', function() {
+            interactionStartTime = Date.now();
+            trackInteraction('field_focus');
+        });
+
+        // Formatting function
+        function formatCardNumber(value) {
+            // Remove all non-digits
+            const digits = value.replace(/\D/g, '');
+
+            // Format: 4111 1111 1111 1111
+            let formatted = '';
+            for (let i = 0; i < digits.length; i++) {
+                if (i > 0 && i % 4 === 0) {
+                    formatted += ' ';
+                }
+                formatted += digits[i];
+            }
+
+            // Limit to 16 digits (19 chars with spaces)
+            return formatted.substring(0, 19);
+        }
+
+        // Update submit button state
+        function updateSubmitButton() {
+            const cleanValue = cardInput.value.replace(/\s/g, '');
+            const isValid = cleanValue.length === 16 &&
+                /^\d+$/.test(cleanValue);
+
+            submitBtn.disabled = !isValid;
+            submitBtn.setAttribute('aria-disabled', !isValid);
+        }
+
+        // Tracking functions for usability metrics
+        function trackInteraction(eventType) {
+            let interactions = parseInt(metricsDiv.dataset.interactions) || 0;
+            interactions++;
+            metricsDiv.dataset.interactions = interactions;
+        }
+
+    });
+    // Validation function
+    function validateCardNumber(formattedValue) {
+        const cardInput = document.getElementById('cardNumber');
+        const feedbackDiv = document.getElementById('cardFeedback');
+        let lastValidState = false;
+
+        // Remove spaces for validation
+        const cleanValue = formattedValue.replace(/\s/g, '');
+        const isValidLength = cleanValue.length === 16;
+        const isAllDigits = /^\d+$/.test(cleanValue);
+
+        const isValid = isValidLength && isAllDigits;
+
+        // Remove all previous validation classes
+        cardInput.classList.remove('valid', 'invalid');
+        feedbackDiv.classList.remove('valid-feedback', 'invalid-feedback');
+
+        if (!isValidLength) {
+            cardInput.classList.add('invalid');
+            feedbackDiv.classList.add('invalid-feedback');
+            feedbackDiv.textContent = `Need ${16 - cleanValue.length} more digits`;
+            feedbackDiv.setAttribute('aria-label', 'Invalid: Not enough digits');
+        } else if (!isAllDigits) {
+            cardInput.classList.add('invalid');
+            feedbackDiv.classList.add('invalid-feedback');
+            feedbackDiv.textContent = 'Only numbers allowed';
+            feedbackDiv.setAttribute('aria-label', 'Invalid: Contains non-numeric characters');
+        } else {
+            cardInput.classList.add('valid');
+            feedbackDiv.classList.add('valid-feedback');
+            feedbackDiv.textContent = 'Valid card number';
+            feedbackDiv.setAttribute('aria-label', 'Valid card number');
+
+            // Detect card type for better UX
+            const cardType = detectCardType(cleanValue);
+            if (cardType) {
+                feedbackDiv.textContent += ` (${cardType})`;
+            }
+        }
+
+        // Track correction attempts
+        if (lastValidState === false && isValid === true) {
+            trackCorrection();
+        }
+        return isValid;
+    }
+    function trackCorrection() {
+        const metricsDiv = document.getElementById('usabilityMetrics');
+        let corrections = parseInt(metricsDiv.dataset.corrections) || 0;
+        corrections++;
+        metricsDiv.dataset.corrections = corrections;
+        console.log(`[Usability] Correction #${corrections} at ${Date.now() - interactionStartTime}ms`);
+    }
+    // Detect card type for better feedback
+    function detectCardType(cardNumber) {
+        if (/^4/.test(cardNumber)) return 'Visa';
+        if (/^5[1-5]/.test(cardNumber)) return 'MasterCard';
+        if (/^3[47]/.test(cardNumber)) return 'American Express';
+        if (/^6(?:011|5)/.test(cardNumber)) return 'Discover';
+        return null;
+    }
+    // Submit function
+    async function submitPayment() {
+        const submitBtn = document.getElementById('submitBtn');
+        const cardInput = document.getElementById('cardNumber');
+
+        // Double-check validation
+        const card = document.getElementById('cardNumber');
+        if(!validateCardNumber(card.value)) {
+            cardInput.focus();
+            return;
+        }
+
+        // Prevent double submission
+        submitBtn.disabled = true;
+        submitBtn.classList.add('loading');
+        submitBtn.textContent = 'Processing...';
+
+        try {
+            // Simulate API call
+            await new Promise(resolve => setTimeout(resolve, 1500));
+
+            // Success
+            // Re-enable button
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('loading');
+            submitBtn.textContent = 'Submit Payment';
+            alert(`Payment processed successfully!`);
+        } catch (error) {
+            // Error handling
+            alert('Payment failed. Please try again or use a different card.');
+
+            // Re-enable button
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('loading');
+            submitBtn.textContent = 'Submit Payment';
+        }
+    }
+</script>
+</body>
+</html>

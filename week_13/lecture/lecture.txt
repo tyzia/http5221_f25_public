@@ -1,0 +1,209 @@
+
+
+
+
+Plan
+
+Recap about Final Report
+How to fix usability issues
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Data Analysis
+
+Involves reviewing collected data to identify:
+
+- Patterns
+- Pain points
+- Insights
+
+Steps include:
+
+Quantitative Analysis – Measuring metrics
+(completion rates, time efficiency, and error frequency).
+
+
+Example
+
+Question:
+"Are users regularly able to complete the 'checkout'
+task in under 120 seconds?"
+
+We collected the following data
+from usability test:
+
+96 sec - Average completion
+88 sec - Min completion
+104 sec - Max completion
+0 - Critical errors observed
+
+Conclusion:
+'checkout' task does not require a redesign.
+
+Facts, observed during tests, should support your conclusion.
+
+
+Question to keep in mind when creating the report
+
+What you did?
+Why you did it?
+How you did it?
+What you have learned?
+What should be done?
+What data backs up your findings?
+
+Reporting Findings – Summarize action items to improve usability.
+
+- Things to improve
+- Things to investigate further
+
+The goal of the report is to point to
+problems and propose solutions.
+
+- Keep solutions specific & positive, provide details.
+- Present pros & cons.
+- Organize your solutions based on severity
+- Don't recommend making small changes to a big problem.
+- Align with the client's priorities & help to prioritize.
+- Use formal language.
+
+
+
+
+
+
+
+
+
+
+
+
+How to fix usability issues
+
+
+
+
+
+
+
+
+Let's see example of a bad User Experience
+when they interact with credit card field.
+
+Example: Usability test shows that there are
+3.2 average correction attempts for this field.
+
+
+
+demo/broken.html
+
+
+Problems:
+
+1. Generic error message, doesn't provide details.
+2. No live validation - user has to remember how
+many digits they already filled in.
+3. Not clear, are spaces or dashes allowed?
+4. If number is valid, I can submit multiple times.
+5. No accessibility added.
+6. No tracking of user actions.
+7. Doesn't show progress state to the user.
+
+
+Examples:
+
+Type 4111-1111-1111-1111 (with dashes) → error
+
+Type 4111 1111 1111 1111 (with spaces) → error
+
+Type 411111111111111 (15 chars instead of 16) → error
+
+Each time user gets generic "Invalid card number"
+and no details or hints.
+
+The user experience:
+
+A user typing naturally (with spaces) hits both
+failure conditions instantly.
+
+User had 3 correction attempts already!
+
+This is a bad user experience.
+
+
+The cause:
+
+cardNumber.length !== 16
+
+Fails if user adds spaces:
+
+"4111 1111 1111 1111".length = 19
+
+Fails if user adds dashes:
+
+"4111-1111-1111-1111".length = 19
+
+
+isNaN(cardNumber)
+
+Fails if user adds spaces and 16 chars:
+
+isNaN("4111 1111 1111 1") returns true (because spaces)
+
+
+
+
+Solution:
+
+Don't validate what the user types;
+Clean user input and validate it.
+
+Strip spaces/dashes first,
+then check length and numeric validity.
+
+Format as they type so they never have to
+think about it.
+
+
+Checks:
+
+Paste 4444444444444444
+
+4111111111111111 (Visa)
+5111111111111111 (MasterCard)
+3471111111111111 (American Express)
+6111111111111111 (Discover)
+
+
+
+demo/fixed.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Thank you
